@@ -98,6 +98,7 @@ const TodoSlice = createSlice({
   reducers: {
     addTodo: (state, action) => {
       state.todoItems.unshift(action.payload);
+      state.activeTodoItems.unshift(action.payload);
     },
     removeTodo: (state, action) => {
       state.todoItems = state.todoItems.filter(
