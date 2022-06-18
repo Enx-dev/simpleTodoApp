@@ -3,7 +3,6 @@ import checkIcon from "../images/icon-check.svg";
 import { useAppDispatch } from "../App/store/store";
 import { ToogleCompleted, removeTodo } from "../App/slice/data";
 import { AnimatePresence, motion, useAnimation } from "framer-motion";
-import { v4 as uuid } from "uuid";
 import { useDrag, useDrop } from "react-dnd";
 
 type Props = {
@@ -30,7 +29,7 @@ const TodoListItem = ({
   const controller = useAnimation();
 
   const originalIndex = findCard(id).index;
-  const [isDragging, drag] = useDrag(
+  const [, drag] = useDrag(
     () => ({
       type: "todo",
       item: { id, originalIndex },

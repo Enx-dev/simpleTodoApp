@@ -4,7 +4,7 @@
     &_Header_div {
       @apply flex justify-between items-center mb-6;
       &_h1 {
-        @apply text-3xl font-bold text-white tracking-[0.3em];
+        @apply text-3xl font-bold text-white tracking-head;
       }
     }
     &_completed {

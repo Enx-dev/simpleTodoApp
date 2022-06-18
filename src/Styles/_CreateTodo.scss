@@ -13,7 +13,9 @@
             text-[18px]
             text-light-darkGrayishBlue dark:text-dark-lightGrayishBlue text-sm rounded-md bg-transparent outline-none 
             placeholder:text-light-darkGrayishBlue
-            dark:placeholder:text-dark-darkGrayishBlue;
+            dark:placeholder:text-dark-darkGrayishBlue
+            caret-brightBlue
+            ;
         }
     }
 }

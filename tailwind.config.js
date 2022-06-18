@@ -4,6 +4,9 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      letterSpacing: {
+        head: "0.3em",
+      },
       colors: {
         brightBlue: "hsl(220, 98%, 61%)",
         light: {

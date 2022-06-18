@@ -1,4 +1,4 @@
-@layer components {
+@layer base {
   .TodoListItem {
     @apply py-4 flex first:rounded-t-md space-x-2 items-center border-b-[1px] cursor-move
         border-light-lightGrayishBlue text-light-veryDarkGrayishBlue
@@ -11,13 +11,13 @@
       @apply w-5 h-5 border border-light-darkGrayishBlue dark:border-dark-veryDarkGrayishBlue rounded-full;
     }
     &_content_uncompleted {
-      @apply text-[14px];
+      @apply text-base;
       &:hover{
         @apply dark:text-dark-lightGrayishBlueHover 
       }
     }
     &_content_completed {
-      @apply text-[14px] text-light-lightGrayishBlue dark:text-dark-veryDarkGrayishBlue line-through;
+      @apply text-base text-light-lightGrayishBlue dark:text-dark-veryDarkGrayishBlue line-through;
     }
     &_delete {
       @apply text-3xl hidden  font-thin 
@@ -28,13 +28,14 @@
       @apply w-6 h-6 border border-dark-veryDarkGrayishBlue bg-gradient-to-br flex place-items-center justify-center from-dark-from to-dark-to rounded-full;
     }
   }
+  .TodoListItem_uncompleted:hover {
+    border-radius: 50%;
+    border-image-slice: 1;
+    border-image-source: linear-gradient(
+      to right,
+      hsl(192, 100%, 67%),
+      hsl(280, 87%, 65%)
+    );
+  }
 }
-.TodoListItem_uncompleted:hover {
-  border-radius: 50%;
-  border-image-slice: 1;
-  border-image-source: linear-gradient(
-    to right,
-    hsl(192, 100%, 67%),
-    hsl(280, 87%, 65%)
-  );
-}
+
