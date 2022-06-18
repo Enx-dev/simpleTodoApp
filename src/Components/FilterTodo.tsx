@@ -24,24 +24,27 @@ const FilterTodo = (props: Props) => {
     <div className='FilterTodo'>
       <button
         className={`${
-          Current === "all" &&
-          "text-brightBlue dark:text-brightBlue hover:!text-brightBlue"
+          Current === "all"
+            ? "text-brightBlue dark:text-brightBlue hover:!text-brightBlue"
+            : "null"
         }`}
         onClick={() => setCurrentTodos("all")}>
         All
       </button>
       <button
         className={`${
-          Current === "active" &&
-          "text-brightBlue dark:text-brightBlue hover:!text-brightBlue"
+          Current === "active"
+            ? "text-brightBlue dark:text-brightBlue hover:!text-brightBlue"
+            : "null"
         }`}
         onClick={() => setCurrentTodos("active")}>
         Active
       </button>
       <button
         className={`${
-          Current === "completed" &&
-          "text-brightBlue dark:text-brightBlue hover:!text-brightBlue"
+          Current === "completed"
+            ? "text-brightBlue dark:text-brightBlue hover:!text-brightBlue"
+            : "null"
         }`}
         onClick={() => setCurrentTodos("completed")}>
         Completed
