@@ -8,21 +8,17 @@ import { PersistGate } from "redux-persist/integration/react";
 import { DndProvider } from "react-dnd";
 import { TouchBackend } from "react-dnd-touch-backend";
 import { HTML5Backend } from "react-dnd-html5-backend";
-
-const opts = {
-  enableMouseEvents: true,
-};
+import { DnDMulti } from "./hooks/DnD";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
     <Provider store={makeStore}>
       <PersistGate loading={null} persistor={persistor}>
-        <DndProvider backend={HTML5Backend} options={opts}>
-          <App />
-        </DndProvider>
+        <DnDMulti childern={<App />} />
       </PersistGate>
     </Provider>
   </React.StrictMode>

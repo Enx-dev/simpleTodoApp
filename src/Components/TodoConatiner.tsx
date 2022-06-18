@@ -65,8 +65,6 @@ const TodoConatiner = (props: Props) => {
   const moveCard = useCallback(
     (id: string, atIndex: number) => {
       const { card, index } = findCard(id);
-      // const newCards = todos?.splice(index!, 0, card);
-      // console.log(newCards);
       dispatch(
         setTodos(
           update(Todos, {
