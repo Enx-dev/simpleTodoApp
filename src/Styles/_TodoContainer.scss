@@ -1,0 +1,41 @@
+@layer components {
+  .TodoContainer {
+    @apply relative -top-[170px] pb-[35rem] left-0 right-0 bottom-0 m-auto h-[80%] w-[90%] max-w-[450px] flex flex-col;
+    &_Header_div {
+      @apply flex justify-between items-center mb-6;
+      &_h1 {
+        @apply text-3xl font-bold text-white tracking-[0.3em];
+      }
+    }
+    &_completed {
+      @apply flex md:hidden justify-between p-4 bg-light-veryLightGray dark:bg-dark-veryDarkDesaturatedBlue rounded-b-md;
+      & > * {
+        @apply text-light-darkGrayishBlue dark:text-dark-veryDarkGrayishBlue;
+      }
+      & > button:hover {
+        @apply text-light-veryDarkGrayishBlue dark:text-dark-lightGrayishBlueHover;
+      }
+    }
+    &_List {
+      @apply my-4 rounded-md;
+      box-shadow: 22.7px 0px 94.5px rgba(0, 0, 0, 0.058),
+        44.4px 0px 98.5px rgba(0, 0, 0, 0.091),
+        59.7px 0px 70.7px rgba(0, 0, 0, 0.108),
+        68px 0px 141px rgba(0, 0, 0, 0.12);
+       
+    }
+    &_footer {
+      @apply text-center w-full text-dark-darkGrayishBlue;
+    }
+    &_initial {
+      @apply my-5 w-full py-8 bg-dark-veryDarkDesaturatedBlue flex justify-center items-center text-dark-lightGrayishBlueHover text-4xl text-center rounded-md font-bold;
+      box-shadow: 12.9px 8px 70.9px rgba(0, 0, 0, 0.208),
+        25.9px 16px 98.7px rgba(0, 0, 0, 0.266),
+        38.6px 23.8px 102.4px rgba(0, 0, 0, 0.295),
+        49.7px 30.7px 92px rgba(0, 0, 0, 0.307),
+        58px 35.8px 74.9px rgba(0, 0, 0, 0.304),
+        63.8px 39.4px 62px rgba(0, 0, 0, 0.282),
+        68px 42px 141px rgba(0, 0, 0, 0.2);
+    }
+  }
+}

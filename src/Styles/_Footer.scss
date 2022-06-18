@@ -1,0 +1,11 @@
+@layer components {
+    .Footer{
+        @apply hidden md:flex justify-between px-4 py-4 bg-light-veryLightGray dark:bg-dark-veryDarkDesaturatedBlue text-light-darkGrayishBlue dark:text-dark-darkGrayishBlue;
+         
+        &_filter{
+            @apply space-x-2
+        }&:hover{
+            @apply text-light-veryDarkGrayishBlue dark:text-dark-lightGrayishBlueHover 
+         }
+    }
+}

@@ -1,0 +1,28 @@
+
+[
+  {
+    "id": "1",
+    "content": "Complete online course on ReactJS",
+    "completed": false
+  },
+  {
+    "id": "2",
+    "content": "Complete online course on AngularJS",
+    "completed": true
+  },
+  {
+    "id": "3",
+    "content": "Complete online course on NodeJS",
+    "completed": false
+  },
+  {
+    "id": "4",
+    "content": "Complete online course on MongoDB",
+    "completed": false
+  },
+  {
+    "id": "5",
+    "content": "Complete online course on ExpressJS",
+    "completed": false
+  }
+]
