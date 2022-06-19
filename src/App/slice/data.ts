@@ -6,23 +6,32 @@ interface Todo {
     id: string;
     content: string;
     completed: boolean;
+    justCreated: boolean;
+    deleted: boolean;
   }[];
   completedTodoItems: {
     id: string;
     content: string;
     completed: boolean;
+    justCreated: boolean;
+    deleted: boolean;
   }[];
   activeTodoItems: {
     id: string;
     content: string;
     completed: boolean;
+    justCreated: boolean;
+    deleted: boolean;
   }[];
   todos: {
     id: string;
     content: string;
     completed: boolean;
+    justCreated: boolean;
+    deleted: boolean;
   }[];
   currentTodo: string;
+  justCreated: boolean;
 }
 
 const initialState: Todo = {
@@ -31,26 +40,36 @@ const initialState: Todo = {
       id: "1",
       content: "Complete online course on ReactJS",
       completed: false,
+      justCreated: false,
+      deleted: false,
     },
     {
       id: "2",
       content: "Complete online course on AngularJS",
       completed: true,
+      justCreated: false,
+      deleted: false,
     },
     {
       id: "3",
       content: "Complete online course on NodeJS",
       completed: false,
+      justCreated: false,
+      deleted: false,
     },
     {
       id: "4",
       content: "Complete online course on MongoDB",
       completed: false,
+      justCreated: false,
+      deleted: false,
     },
     {
       id: "5",
       content: "Complete online course on ExpressJS",
       completed: false,
+      justCreated: false,
+      deleted: false,
     },
   ],
   completedTodoItems: [
@@ -58,6 +77,8 @@ const initialState: Todo = {
       id: "2",
       content: "Complete online course on AngularJS",
       completed: true,
+      justCreated: false,
+      deleted: false,
     },
   ],
   activeTodoItems: [
@@ -65,21 +86,30 @@ const initialState: Todo = {
       id: "1",
       content: "Complete online course on ReactJS",
       completed: false,
+
+      justCreated: false,
+      deleted: false,
     },
     {
       id: "3",
       content: "Complete online course on NodeJS",
       completed: false,
+      justCreated: false,
+      deleted: false,
     },
     {
       id: "4",
       content: "Complete online course on MongoDB",
       completed: false,
+      justCreated: false,
+      deleted: false,
     },
     {
       id: "5",
       content: "Complete online course on ExpressJS",
       completed: false,
+      justCreated: false,
+      deleted: false,
     },
   ],
   todos: [
@@ -87,9 +117,12 @@ const initialState: Todo = {
       id: "",
       content: "",
       completed: false,
+      justCreated: false,
+      deleted: false,
     },
   ],
   currentTodo: "all",
+  justCreated: true,
 };
 
 const TodoSlice = createSlice({
@@ -99,6 +132,13 @@ const TodoSlice = createSlice({
     addTodo: (state, action) => {
       state.todoItems.unshift(action.payload);
       state.activeTodoItems.unshift(action.payload);
+      state.todoItems[0].justCreated = true;
+    },
+    clearJustCreated(state, action) {
+      state.todoItems[0].justCreated = false;
+      state.activeTodoItems[0].justCreated = false;
+      state.completedTodoItems[0].justCreated = false;
+      state.todos[0].justCreated = false;
     },
     removeTodo: (state, action) => {
       state.todoItems = state.todoItems.filter(
@@ -151,8 +191,10 @@ const TodoSlice = createSlice({
       }
     },
     setTodos(state, action) {
-      state.todos = action.payload;
-      state.todoItems = action.payload;
+      state.todos = action.payload.item;
+      if (action.payload.name === "all") {
+        state.todoItems = action.payload.item;
+      }
     },
   },
 });
@@ -164,6 +206,7 @@ export const {
   removeTodo,
   setCurrentTodo,
   setTodos,
+  clearJustCreated,
 } = TodoSlice.actions;
 export const TodoReducer = TodoSlice.reducer;
 
@@ -173,3 +216,4 @@ export const completedTodos = (state: RootState) =>
 export const activeTodos = (state: RootState) => state.Todo.activeTodoItems;
 export const currentTodo = (state: RootState) => state.Todo.currentTodo;
 export const todos = (state: RootState) => state.Todo.todos;
+export const justCreated = (state: RootState) => state.Todo.justCreated;

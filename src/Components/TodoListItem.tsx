@@ -1,14 +1,19 @@
 import React from "react";
 import checkIcon from "../images/icon-check.svg";
-import { useAppDispatch } from "../App/store/store";
-import { ToogleCompleted, removeTodo } from "../App/slice/data";
+import { useAppDispatch, useAppSelector } from "../App/store/store";
+import {
+  ToogleCompleted,
+  removeTodo,
+  justCreated,
+  currentTodo,
+} from "../App/slice/data";
 import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import { useDrag, useDrop } from "react-dnd";
-
 type Props = {
   id: string;
   content: string;
   completed: boolean;
+  justCreated: boolean;
   moveCard: (id: string, atIndex: number) => void;
   findCard: (id: string) => any;
 };
@@ -22,12 +27,13 @@ const TodoListItem = ({
   content,
   completed,
   id,
+  justCreated,
   findCard,
   moveCard,
 }: Props) => {
   const dispatch = useAppDispatch();
   const controller = useAnimation();
-
+  const Current = useAppSelector(currentTodo);
   const originalIndex = findCard(id).index;
   const [, drag] = useDrag(
     () => ({
@@ -67,37 +73,51 @@ const TodoListItem = ({
     dispatch(removeTodo(id));
     controller.set("deleted");
   };
+
+  const SlideOut = {
+    exit: {
+      x: 500,
+      opacity: 0,
+      transition: {
+        duration: 0.3,
+        ease: "easeInOut",
+      },
+    },
+  };
+
   return (
-    <AnimatePresence initial={false} presenceAffectsLayout>
-      <motion.div
-        ref={(node) => drag(drop(node))}
-        className='TodoListItem group'>
-        <div className='TodoListItem_wrapper'>
-          <div
-            onClick={() => {
-              makeTodoCompleted();
-            }}
-            className={`${
-              completed ? "TodoListItem_completed" : "TodoListItem_uncompleted"
-            }`}>
-            {completed && <img src={checkIcon} alt='check' />}
-          </div>
-          <p
-            className={` ${
-              completed
-                ? "TodoListItem_content_completed"
-                : "TodoListItem_content_uncompleted"
-            }`}>
-            {content}
-          </p>
+    <motion.div
+      ref={(node) => drag(drop(node))}
+      variants={SlideOut}
+      exit={Current === "all" ? "exit" : "dont"}
+      className={`${
+        justCreated ? "animate-slideInLeft duration-200" : "dont"
+      } TodoListItem group`}>
+      <div className='TodoListItem_wrapper'>
+        <div
+          onClick={() => {
+            makeTodoCompleted();
+          }}
+          className={`${
+            completed ? "TodoListItem_completed" : "TodoListItem_uncompleted"
+          }`}>
+          {completed && <img src={checkIcon} alt='check' />}
         </div>
-        <button
-          onClick={() => removeTodoItem()}
-          className='TodoListItem_delete group-hover:block'>
-          x
-        </button>
-      </motion.div>
-    </AnimatePresence>
+        <p
+          className={` ${
+            completed
+              ? "TodoListItem_content_completed"
+              : "TodoListItem_content_uncompleted"
+          }`}>
+          {content}
+        </p>
+      </div>
+      <button
+        onClick={() => removeTodoItem()}
+        className='TodoListItem_delete group-hover:block'>
+        x
+      </button>
+    </motion.div>
   );
 };
 

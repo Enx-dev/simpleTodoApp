@@ -7,7 +7,7 @@
         0px 50.9px 70.7px rgba(0, 0, 0, 0.108),
         0px 58px 141px rgba(0, 0, 0, 0.12);
         & > *{
-            @apply text-light-darkGrayishBlue dark:text-dark-veryDarkGrayishBlue font-bold;
+            @apply text-light-darkGrayishBlue outline-none dark:text-dark-veryDarkGrayishBlue font-bold;
             &:hover{
                 @apply text-light-veryDarkGrayishBlue dark:text-dark-lightGrayishBlueHover 
             }

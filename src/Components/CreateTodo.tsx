@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useAppDispatch } from "../App/store/store";
 import { v4 as uuid } from "uuid";
-import { addTodo } from "../App/slice/data";
+import { addTodo, clearJustCreated } from "../App/slice/data";
 
 type Props = {};
 
@@ -24,6 +24,9 @@ const CreateTodo = (props: Props) => {
       content: "",
       id: uuid(),
     });
+    setTimeout(() => {
+      dispatch(clearJustCreated("clear"));
+    }, 1000);
     if (createTodoRef.current) {
       createTodoRef.current.value = "";
     }

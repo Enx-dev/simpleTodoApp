@@ -14,9 +14,11 @@ import {
   completedTodos,
   todos,
   setTodos,
+  justCreated,
 } from "../App/slice/data";
 import { setTheme, currentTheme } from "../App/slice/theme";
 import Footer from "./Footer";
+import { AnimatePresence, motion } from "framer-motion";
 type Props = {};
 
 const TodoConatiner = (props: Props) => {
@@ -27,7 +29,7 @@ const TodoConatiner = (props: Props) => {
   const completed = useAppSelector(completedTodos);
   const theme = useAppSelector(currentTheme);
   const Todos = useAppSelector(todos);
-
+  const isJustCreated = useAppSelector(justCreated);
   const toogleTheme = (n: string) => {
     dispatch(setTheme(n));
   };
@@ -35,16 +37,16 @@ const TodoConatiner = (props: Props) => {
   useEffect(() => {
     switch (currentTodos) {
       case "all":
-        dispatch(setTodos(allTodo));
+        dispatch(setTodos({ item: allTodo, name: "all" }));
         break;
       case "active":
-        dispatch(setTodos(activeTodo));
+        dispatch(setTodos({ item: activeTodo, name: "active" }));
         break;
       case "completed":
-        dispatch(setTodos(completed));
+        dispatch(setTodos({ item: completed, name: "completed" }));
         break;
       default:
-        dispatch(setTodos(allTodo));
+        dispatch(setTodos({ item: allTodo, name: "all" }));
     }
   }, [activeTodo, allTodo, currentTodos, completed, dispatch]);
 
@@ -54,6 +56,8 @@ const TodoConatiner = (props: Props) => {
         id: string;
         content: string;
         completed: boolean;
+        justCreated: boolean;
+        deleted: boolean;
       };
       return {
         card,
@@ -65,18 +69,52 @@ const TodoConatiner = (props: Props) => {
   const moveCard = useCallback(
     (id: string, atIndex: number) => {
       const { card, index } = findCard(id);
-      dispatch(
-        setTodos(
-          update(Todos, {
-            $splice: [
-              [index, 1],
-              [atIndex, 0, card],
-            ],
-          })
-        )
-      );
+      switch (currentTodos) {
+        case "all":
+          dispatch(
+            setTodos({
+              item: update(Todos, {
+                $splice: [
+                  [index, 1],
+                  [atIndex, 0, card],
+                ],
+              }),
+              name: "all",
+            })
+          );
+          break;
+        case "active":
+          dispatch(
+            setTodos({
+              item: update(Todos, {
+                $splice: [
+                  [index, 1],
+                  [atIndex, 0, card],
+                ],
+              }),
+              name: "active",
+            })
+          );
+          break;
+        case "completed":
+          dispatch(
+            setTodos({
+              item: update(Todos, {
+                $splice: [
+                  [index, 1],
+                  [atIndex, 0, card],
+                ],
+              }),
+              name: "completed",
+            })
+          );
+          break;
+
+        default:
+          break;
+      }
     },
-    [findCard, Todos, dispatch]
+    [findCard, Todos, dispatch, currentTodos]
   );
 
   return (
@@ -94,21 +132,27 @@ const TodoConatiner = (props: Props) => {
         )}
       </div>
       <CreateTodo />
-      {todos?.length !== 0 ? (
-        <section className='TodoContainer_List'>
-          {Todos?.map((todo) => {
-            return (
-              <TodoListItem
-                key={todo.id}
-                content={todo.content}
-                id={todo.id}
-                completed={todo.completed}
-                moveCard={moveCard}
-                findCard={findCard}
-              />
-            );
-          })}
-
+      {Todos?.length !== 0 ? (
+        <motion.section
+          className='TodoContainer_List'
+          transition={{
+            staggerChildren: 0.2,
+          }}>
+          <AnimatePresence>
+            {Todos?.map((todo) => {
+              return (
+                <TodoListItem
+                  justCreated={todo.justCreated}
+                  key={todo.id}
+                  content={todo.content}
+                  id={todo.id}
+                  completed={todo.completed}
+                  moveCard={moveCard}
+                  findCard={findCard}
+                />
+              );
+            })}
+          </AnimatePresence>
           <div className='TodoContainer_completed'>
             <p>{activeTodo.length} items left</p>
             <button onClick={() => dispatch(clearCompleted())}>
@@ -116,9 +160,13 @@ const TodoConatiner = (props: Props) => {
             </button>
           </div>
           <Footer />
-        </section>
+        </motion.section>
       ) : (
-        <div className='TodoContainer_initial'>Create Your First Todo</div>
+        <div className='TodoContainer_initial'>
+          {currentTodos === "completed"
+            ? "Complete a Todo"
+            : "Create Your First Todo"}
+        </div>
       )}
 
       <FilterTodo />
